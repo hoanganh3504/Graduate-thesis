@@ -1,0 +1,21 @@
+# Build outputs
+Debug/
+Release/
+
+# Eclipse/CubeIDE workspace metadata
+.metadata/
+*.metadata
+
+# Build artifacts
+*.o
+*.d
+*.elf
+*.hex
+*.bin
+*.map
+*.list
+*.su
+objects.list
+objects.mk
+sources.mk
+makefile

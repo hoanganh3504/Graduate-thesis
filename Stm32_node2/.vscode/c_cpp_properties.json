@@ -1,0 +1,33 @@
+{
+  "configurations": [
+    {
+      "name": "STM32",
+      "includePath": [
+        "${workspaceFolder}/node2/Core/Inc",
+        "${workspaceFolder}/node2/Drivers/STM32F4xx_HAL_Driver/Inc",
+        "${workspaceFolder}/node2/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+        "${workspaceFolder}/node2/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+        "${workspaceFolder}/node2/Drivers/CMSIS/Include"
+      ],
+      "defines": [
+        "USE_HAL_DRIVER",
+        "STM32F407xx"
+      ],
+      "compilerPath": "C:/ST/STM32CubeIDE_2.1.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.14.3.rel1.win32_1.0.100.202602081740/tools/bin/arm-none-eabi-gcc.exe",
+      "cStandard": "gnu11",
+      "cppStandard": "gnu++17",
+      "intelliSenseMode": "gcc-arm",
+      "browse": {
+        "path": [
+          "${workspaceFolder}/node2/Core/Inc",
+          "${workspaceFolder}/node2/Drivers/STM32F4xx_HAL_Driver/Inc",
+          "${workspaceFolder}/node2/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy",
+          "${workspaceFolder}/node2/Drivers/CMSIS/Device/ST/STM32F4xx/Include",
+          "${workspaceFolder}/node2/Drivers/CMSIS/Include"
+        ],
+        "limitSymbolsToIncludedHeaders": true
+      }
+    }
+  ],
+  "version": 4
+}

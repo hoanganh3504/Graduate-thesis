@@ -1,0 +1,14 @@
+# Bỏ qua các thư mục build của STM32CubeIDE
+Debug/
+Release/
+
+# Bỏ qua các file biên dịch
+*.o
+*.elf
+*.bin
+*.hex
+*.list
+*.map
+
+# Bỏ qua cấu hình riêng của VS Code (tuỳ chọn)
+.vscode/
