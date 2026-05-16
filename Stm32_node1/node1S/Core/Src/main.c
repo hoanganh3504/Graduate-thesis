@@ -127,20 +127,28 @@ TxHeader.TransmitGlobalTime = DISABLE;
     /* USER CODE BEGIN 3 */
 
 	  if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET)
-{
-    HAL_Delay(20);
-    if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET)
     {
-      HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-      TxData[0] = 0xAA;
-      TxData[1] = 0xBB;
-      if (HAL_CAN_AddTxMessage(&hcan, &TxHeader, TxData, &TxMailbox) == HAL_OK)
+      HAL_Delay(20);
+      if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET)
       {
-        /* Wait for ACK from node2 in RX callback */
+        TxData[0] = 0xAA;
+        TxData[1] = 0xBB;
+        if (HAL_CAN_AddTxMessage(&hcan, &TxHeader, TxData, &TxMailbox) == HAL_OK)
+        {
+          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
+        }
+        else
+        {
+          for (int i = 0; i < 6; i++)
+          {
+            HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8);
+            HAL_Delay(100);
+          }
+        }
+        while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET);
+        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
       }
-      while (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET);
     }
-}
   /* USER CODE END 3 */
 }
 
@@ -185,16 +193,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
-{
-  if (HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &RxHeader, RxData) == HAL_OK)
-  {
-    if (RxHeader.StdId == CAN_ACK_ID)
-    {
-      HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-    }
-  }
-}
 
 /* USER CODE END 4 */
 

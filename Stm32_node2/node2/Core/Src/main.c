@@ -49,10 +49,6 @@
 /* USER CODE BEGIN PV */
 CAN_RxHeaderTypeDef RxHeader;
 uint8_t RxData[8];
-CAN_TxHeaderTypeDef TxHeader;
-uint8_t TxData[8];
-uint32_t TxMailbox;
-volatile uint8_t sendAck = 0;
 
 /* USER CODE END PV */
 
@@ -115,12 +111,6 @@ int main(void)
   HAL_CAN_Start(&hcan1);
   HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
 
-  TxHeader.StdId = CAN_ACK_ID;
-  TxHeader.IDE = CAN_ID_STD;
-  TxHeader.RTR = CAN_RTR_DATA;
-  TxHeader.DLC = 1;
-  TxHeader.TransmitGlobalTime = DISABLE;
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -129,12 +119,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
-    if (sendAck)
-    {
-      sendAck = 0;
-      TxData[0] = 0x01;
-      HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox);
-    }
+    /* CAN RX handled in callback */
     /* USER CODE END 3 */
   }
 }
@@ -192,11 +177,9 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
     {
         if (RxHeader.StdId == CAN_REQ_ID)
         {
-        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-        sendAck = 1;
+            HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_8);
         }
     }
-    
 }
 /* USER CODE END 4 */
 
